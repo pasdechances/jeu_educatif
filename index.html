@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🔢 Les Nombres Magiques</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrapper">
+
+    <header>
+      <h1>🔢 Les Nombres Magiques</h1>
+      <p>Apprends, joue et débloque des activités !</p>
+    </header>
+
+    <div class="scorebar">
+      <div class="badge pts"><span class="icon">🪙</span>Points : <span class="val" id="ptsVal">0</span></div>
+      <div class="badge tot"><span class="icon">🏆</span>Total gagné : <span class="val" id="totalVal">0</span></div>
+      <div class="badge str"><span class="icon">🔥</span>Série : <span class="val" id="strVal">0</span></div>
+    </div>
+
+    <div class="tabs">
+      <div class="menu-group">
+        <div class="group-title">Math</div>
+        <div class="group-buttons">
+          <button class="tab-btn active" onclick="switchTab('grille',this)">🔢 Grille</button>
+          <button class="tab-btn" onclick="switchTab('multiplication',this)">✖️ Multiplication</button>
+          <button class="tab-btn" onclick="switchTab('ud',this)">🧱 Unités &amp; Dizaines</button>
+        </div>
+      </div>
+
+      <div class="menu-group">
+        <div class="group-title">Défis</div>
+        <div class="group-buttons">
+          <button class="tab-btn" onclick="switchTab('quiz',this)">❓ Quiz Math</button>
+        </div>
+      </div>
+
+      <div class="menu-group">
+        <div class="group-title">Détente</div>
+        <div class="group-buttons">
+          <button class="tab-btn detente-tab" onclick="switchTab('detente',this)">🎉 Détente<span class="notif" id="detNotif">!</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel active" id="panel-grille">
+      <div class="grid-controls">
+        <button onclick="highlightMultiples(2,'c7')">× 2</button>
+        <button onclick="highlightMultiples(5,'c3')">× 5</button>
+        <button onclick="highlightMultiples(10,'c4')">× 10</button>
+        <button onclick="resetGrid()">🔄 Effacer</button>
+      </div>
+      <div class="number-grid" id="numGrid"></div>
+      <p style="text-align:center;color:#aaa;font-size:.8rem;margin-top:10px;">👆 Clique pour entendre le nombre</p>
+    </div>
+
+    <div class="panel" id="panel-multiplication">
+      <div class="mult-box">
+        <div class="mult-header">
+          <h2>✖️ Apprendre les multiplications</h2>
+          <p>Choisis deux nombres et découvre leur produit avec la table.</p>
+        </div>
+
+        <div class="mult-controls">
+          <div class="mult-pair">
+            <span class="mult-label">Premier nombre</span>
+            <div class="mult-stepper">
+              <button onclick="changeMultValue('a', -1)">−</button>
+              <span id="multAVal">3</span>
+              <button onclick="changeMultValue('a', 1)">+</button>
+            </div>
+          </div>
+
+          <div class="mult-pair">
+            <span class="mult-label">Deuxième nombre</span>
+            <div class="mult-stepper">
+              <button onclick="changeMultValue('b', -1)">−</button>
+              <span id="multBVal">4</span>
+              <button onclick="changeMultValue('b', 1)">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="mult-equation" id="multEquation">3 × 4 = 12</div>
+
+        <div class="mult-table-box full-width">
+          <div class="method-title">Table de multiplication</div>
+          <div class="mult-table" id="multTable"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="panel-ud">
+      <div class="ud-box">
+        <div class="ud-title">🧱 Comprendre les Unités et les Dizaines</div>
+        <div class="ud-tabs">
+          <button class="ud-tab active" onclick="switchUdTab('decomp',this)">🔍 Décomposer</button>
+          <button class="ud-tab" onclick="switchUdTab('dizaines',this)">🏗️ Dizaines</button>
+          <button class="ud-tab" onclick="switchUdTab('unites',this)">🟠 Unités</button>
+        </div>
+        <div class="ud-section active" id="ud-decomp">
+          <div class="num-selector">
+            <button class="btn-minus" onclick="changeUd(-1)">−</button>
+            <div class="ud-num-display" id="udDisplay">34</div>
+            <button class="btn-plus" onclick="changeUd(1)">+</button>
+          </div>
+          <div class="blocks-area" id="blocksArea"></div>
+          <div class="decomp-eq" id="decompEq"></div>
+          <div class="decomp-word" id="decompWord"></div>
+          <p class="legend-row">🔵 1 barre = <strong>10</strong> &nbsp;|&nbsp; 🔴 1 cube = <strong>1</strong></p>
+        </div>
+        <div class="ud-section" id="ud-dizaines">
+          <p style="text-align:center;font-size:.9rem;color:#888;margin-bottom:16px;font-weight:600;">Clique sur une dizaine pour l'entendre 🔊</p>
+          <div class="diz-grid" id="dizGrid"></div>
+          <div id="dizDetail" style="margin-top:16px;text-align:center;min-height:50px;font-family:'Fredoka One',cursive;font-size:1.05rem;color:#aaa;"></div>
+        </div>
+        <div class="ud-section" id="ud-unites">
+          <p style="text-align:center;font-size:.9rem;color:#888;margin-bottom:14px;font-weight:600;">Les chiffres 0–9 se retrouvent dans toutes les dizaines !</p>
+          <div class="unit-grid" id="unitGrid"></div>
+          <div class="unit-example" id="unitExample"><p style="color:#ccc;">Clique sur un chiffre 👆</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="panel-quiz">
+      <div class="diff-selector" id="diffSelector"></div>
+
+      <div class="quiz-subpanel active" id="quiz-sub-quiz">
+        <div class="quiz-box">
+          <div class="quiz-prompt" id="quizPrompt">Chargement...</div>
+          <div class="quiz-choices" id="quizChoices"></div>
+          <div class="validate-row">
+            <button class="validate-btn" id="validateBtn" onclick="validateAnswer()">✅ Valider ma réponse</button>
+          </div>
+          <div class="streak-banner" id="streakBanner"></div>
+          <div class="quiz-feedback" id="quizFeedback"></div>
+          <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Question suivante ➜</button>
+        </div>
+      </div>
+
+      <div class="quiz-subpanel" id="quiz-sub-compter">
+        <div class="count-box">
+          <div class="count-prompt">Combien d'objets vois-tu ?</div>
+          <div class="count-objects" id="countObjects"></div>
+          <div class="count-input-row">
+            <input type="number" class="count-input" id="countInput" min="1" max="30" placeholder="?">
+            <button class="count-check" onclick="checkCount()">Vérifier ✓</button>
+          </div>
+          <div class="count-feedback" id="countFeedback"></div><br>
+          <button class="new-count-btn" onclick="newCountRound()">Nouveau ↻</button>
+        </div>
+      </div>
+
+      <div class="quiz-subpanel" id="quiz-sub-ordre">
+        <div class="order-box">
+          <div class="order-prompt">Remets les nombres dans l'ordre croissant !</div>
+          <div class="order-nums" id="orderNums"></div>
+          <div class="order-slots" id="orderSlots"></div>
+          <button class="order-check" onclick="checkOrder()">Vérifier ✓</button>
+          <div class="order-feedback" id="orderFeedback"></div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="panel" id="panel-detente">
+      <div class="detente-intro">
+        <h2>🎉 Espace Détente</h2>
+        <p>Gagne des points dans le Quiz pour débloquer des activités !</p>
+      </div>
+      <div class="articles-grid" id="articlesGrid"></div>
+    </div>
+
+    <div class="unlock-toast" id="unlockToast"></div>
+  </div>
+
+  <script src="detente-videos.js"></script>
+  <script src="jeux-data.js"></script>
+  <script src="app-core.js"></script>
+  <script src="quizz.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
