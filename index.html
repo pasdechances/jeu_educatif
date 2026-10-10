@@ -8,6 +8,25 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <script>
+// Paramètre pour désactiver la section Détente
+// Utilisez ?disableDetente=true dans l'URL pour désactiver
+const urlParams = new URLSearchParams(window.location.search);
+const disableDetente = urlParams.get('disableDetente') === 'true';
+
+// Sauvegarder la préférence dans localStorage
+if (disableDetente) {
+  localStorage.setItem('disableDetente', 'true');
+} else if (localStorage.getItem('disableDetente') === 'true') {
+  // Réinitialiser si non spécifié dans l'URL
+  localStorage.removeItem('disableDetente');
+}
+
+// Fonction pour vérifier si la détente est désactivée
+function isDetenteDisabled() {
+  return localStorage.getItem('disableDetente') === 'true';
+}
+</script>
   <div class="wrapper">
 
     <header>
@@ -38,7 +57,8 @@
         </div>
       </div>
 
-      <div class="menu-group">
+      <!-- Section Détente désactivée via le paramètre disableDetente -->
+      <div class="menu-group" id="detente-menu-group" style="display: none;">
         <div class="group-title">Détente</div>
         <div class="group-buttons">
           <button class="tab-btn detente-tab" onclick="switchTab('detente',this)">🎉 Détente<span class="notif" id="detNotif">!</span></button>
