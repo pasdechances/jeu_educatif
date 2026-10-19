@@ -54,7 +54,6 @@ function updateHUD(earnedPts = 0, x, y){
     document.body.appendChild(fl);
     setTimeout(()=>fl.remove(), 950);
   }
-  checkUnlocks();
 }
 
 function earnPoints(n, x, y){
@@ -81,20 +80,14 @@ function loadProgress(){
     const savedPts = Number(localStorage.getItem('jeu-educatif-points') || 0);
     const savedTotalPts = Number(localStorage.getItem('jeu-educatif-total-points') || 0);
     const savedStreak = Number(localStorage.getItem('jeu-educatif-streak') || 0);
-    const rawWatched = localStorage.getItem('jeu-educatif-watched-episodes');
-    const rawUnlocked = localStorage.getItem('jeu-educatif-unlocked-articles');
 
     pts = Number.isFinite(savedPts) ? savedPts : 0;
     totalPts = Number.isFinite(savedTotalPts) ? savedTotalPts : 0;
     streak = Number.isFinite(savedStreak) ? savedStreak : 0;
-    watchedEpisodes = rawWatched ? JSON.parse(rawWatched) : {};
-    unlockedArticles = rawUnlocked ? JSON.parse(rawUnlocked) : {};
   } catch {
     pts = 0;
     totalPts = 0;
     streak = 0;
-    watchedEpisodes = {};
-    unlockedArticles = {};
   }
 }
 
@@ -102,17 +95,8 @@ function saveProgress(){
   localStorage.setItem('jeu-educatif-points', String(pts));
   localStorage.setItem('jeu-educatif-total-points', String(totalPts));
   localStorage.setItem('jeu-educatif-streak', String(streak));
-  localStorage.setItem('jeu-educatif-watched-episodes', JSON.stringify(watchedEpisodes));
-  localStorage.setItem('jeu-educatif-unlocked-articles', JSON.stringify(unlockedArticles));
 }
 
-function loadWatchedEpisodes(){
-  loadProgress();
-}
-
-function saveWatchedEpisodes(){
-  saveProgress();
-}
 
 function showToast(msg){
   const t = document.getElementById('unlockToast');

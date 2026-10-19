@@ -6,27 +6,10 @@
   <title>🔢 Les Nombres Magiques</title>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style-detente.css">
 </head>
 <body>
-  <script>
-// Paramètre pour désactiver la section Détente
-// Utilisez ?disableDetente=true dans l'URL pour désactiver
-const urlParams = new URLSearchParams(window.location.search);
-const disableDetente = urlParams.get('disableDetente') === 'true';
 
-// Sauvegarder la préférence dans localStorage
-if (disableDetente) {
-  localStorage.setItem('disableDetente', 'true');
-} else if (localStorage.getItem('disableDetente') === 'true') {
-  // Réinitialiser si non spécifié dans l'URL
-  localStorage.removeItem('disableDetente');
-}
-
-// Fonction pour vérifier si la détente est désactivée
-function isDetenteDisabled() {
-  return localStorage.getItem('disableDetente') === 'true';
-}
-</script>
   <div class="wrapper">
 
     <header>
@@ -58,7 +41,7 @@ function isDetenteDisabled() {
       </div>
 
       <!-- Section Détente désactivée via le paramètre disableDetente -->
-      <div class="menu-group" id="detente-menu-group" style="display: none;">
+      <div class="menu-group" id="detente-menu-group">
         <div class="group-title">Détente</div>
         <div class="group-buttons">
           <button class="tab-btn detente-tab" onclick="switchTab('detente',this)">🎉 Détente<span class="notif" id="detNotif">!</span></button>
@@ -197,7 +180,8 @@ function isDetenteDisabled() {
     <div class="unlock-toast" id="unlockToast"></div>
   </div>
 
-  <script src="detente-videos.js"></script>
+  <script src="detente-data.js"></script>
+  <script src="detente-ui.js"></script>
   <script src="jeux-data.js"></script>
   <script src="app-core.js"></script>
   <script src="quizz.js"></script>
