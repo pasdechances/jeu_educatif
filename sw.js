@@ -11,13 +11,34 @@ const ASSETS = [
   "./data/detente.js"
 ];
 
-self.addEventListener("install", installEvent => {
-  installEvent.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      cache.addAll(ASSETS)
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(async (cache) => {
+
+      for (const asset of ASSETS) {
+
+        try {
+          const response = await fetch(asset);
+
+          console.log(
+            asset,
+            response.status,
+            response.ok
+          );
+
+          await cache.put(asset, response);
+
+        } catch (err) {
+          console.error(
+            "Erreur sur :",
+            asset,
+            err
+          );
+        }
+      }
     })
-  )
-})
+  );
+});
 
 self.addEventListener("fetch", fetchEvent => {
   fetchEvent.respondWith(
