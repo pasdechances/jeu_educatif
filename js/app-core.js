@@ -20,7 +20,6 @@ const WORDS = ['zéro','un','deux','trois','quatre','cinq','six','sept','huit','
   'quatre-vingt-dix-sept','quatre-vingt-dix-huit','quatre-vingt-dix-neuf','cent'];
 
 
-
 let pts = 0;
 let totalPts = 0;
 let streak = 0;
