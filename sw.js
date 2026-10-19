@@ -11,16 +11,18 @@ const ASSETS = [
   "./data/detente.js"
 ];
 
-self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(ASSETS))
-  );
-});
+self.addEventListener("install", installEvent => {
+  installEvent.waitUntil(
+    caches.open(CACHE_NAME).then(cache => {
+      cache.addAll(ASSETS)
+    })
+  )
+})
 
-self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => response || fetch(event.request))
-  );
-});
+self.addEventListener("fetch", fetchEvent => {
+  fetchEvent.respondWith(
+    caches.match(fetchEvent.request).then(res => {
+      return res || fetch(fetchEvent.request)
+    })
+  )
+})
