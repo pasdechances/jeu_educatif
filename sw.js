@@ -1,14 +1,14 @@
 const CACHE_NAME = "jeu-educatif-v1";
 
 const ASSETS = [
-  "/",
-  "/index.html",
-  "/css/style.css",
-  "/css/style-detente.css",
-  "/js/quizz.js",
-  "/js/detente-ui.js",
-  "/js/app-core.js",
-  "/data/detente.js"
+  "./",
+  "./index.html",
+  "./css/style.css",
+  "./css/style-detente.css",
+  "./js/quizz.js",
+  "./js/detente-ui.js",
+  "./js/app-core.js",
+  "./data/detente.js"
 ];
 
 self.addEventListener("install", (event) => {
