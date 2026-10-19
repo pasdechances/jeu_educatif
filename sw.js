@@ -8,7 +8,7 @@ const ASSETS = [
   "./js/quizz.js",
   "./js/detente-ui.js",
   "./js/app-core.js",
-  "./data/detente.js"
+  "./data/detente-data.js"
 ];
 
 self.addEventListener("install", (event) => {
